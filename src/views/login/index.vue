@@ -77,10 +77,10 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                alert('登录成功!');
                 this.$store.dispatch('ACTION_LOG' , this.ruleForm )
-                console.log(this.$router)
+                alert('登录成功!');
                 this.$router.push({path:'/home'})
+                
             } else {
                 console.log('error submit!!');
                 return false;

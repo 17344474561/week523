@@ -21,60 +21,40 @@ export default new Vuex.Store({
   },
   actions: {
     //登录
-    ACTION_LOG ( commit , val ) {
-      axios.post("http://49.235.147.95:3001/api/user/login", 
+    async  ACTION_LOG ( commit , val ) {
+      const res = await axios.post("http://49.235.147.95:3001/api/user/login", 
         qs.stringify( { username:val.name,password:val.password})
       )
-        .then(res => {
-          if(res.data.code === 200){
-              commit.commit('GET_LOG' , res.data.data.token)
-          } 
-     
-        })
+          localStorage.setItem("token" , res.data.data.token )
+          commit.commit('GET_LOG' , res.data.data.token )
     },
     //获取初始数据
-    ACTION_DATA ({ commit }) {
-      axios.get("http://49.235.147.95:3001/api/supplier/list")
-        .then(res => {
-          if(res.data.code === 200){
-              commit('GET_DATA' , res.data.data)
-          } 
-        })
+    async ACTION_DATA ({ commit }) {
+      const res = await axios.get("http://49.235.147.95:3001/api/supplier/list")
+
+          commit('GET_DATA' , res.data.data)
     },
     //添加
-    ACTION_ADD ( stores , datas ) {
-      axios.post("http://49.235.147.95:3001/api/supplier/add" , 
+    async ACTION_ADD ( stores , datas ) {
+      await axios.post("http://49.235.147.95:3001/api/supplier/add" , 
         qs.stringify(datas)
       )
-        .then(res => {
-          if(res.data.code === 200){
-            stores.dispatch('ACTION_DATA')
-          } 
-        })
+          stores.dispatch('ACTION_DATA')
     },
     //修改
-    ACTION_UPDATA ( stores , data ) {
-      axios.post("http://49.235.147.95:3001/api/supplier/update" , 
+    async ACTION_UPDATA ( stores , data ) {
+      await axios.post("http://49.235.147.95:3001/api/supplier/update" , 
         qs.stringify(data)
       )
-        .then(res => {
-          if(res.data.code === 200){
-            stores.dispatch('ACTION_DATA')
-          } 
-        })
+          stores.dispatch('ACTION_DATA')
     },
     //删除
-    ACTION_DEL ( stores , del ) {
-      axios.post("http://49.235.147.95:3001/api/supplier/delete" , 
+    async ACTION_DEL ( stores , del ) {
+      await axios.post("http://49.235.147.95:3001/api/supplier/delete" , 
         qs.stringify({ id: del.supplierId })
       )
-        .then(res => {
-          if(res.data.code === 200){
-            stores.dispatch('ACTION_DATA')
-          } 
-        })
+          stores.dispatch('ACTION_DATA')
     }
-
   },
   modules: {
   }

@@ -22,4 +22,16 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+    const { fullPath } = to
+    if (!localStorage.getItem("token") && fullPath !== '/') {
+
+        next('/')
+
+    } else {
+
+        next()
+    }
+})
+
 export default router

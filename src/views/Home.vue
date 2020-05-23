@@ -34,7 +34,7 @@
               <el-dropdown-item>删除</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <span>{{islog}}</span>
+          <span>{{islog == '' ? islogin :islog}}</span>
         </el-header>
         <el-button type="text" @click="add">添加供应商</el-button>
         <el-dialog title="添加供应商" :visible.sync="dialogFormVisible">
@@ -101,6 +101,7 @@ export default {
       return {
         dialogFormVisible: false,
         isShow:true,
+        islogin:'',
         form: {
           supplierName: '',
           supplierContact: '',
@@ -122,7 +123,6 @@ export default {
 
     confims  (val ) {
       console.log(val)
-      console.log(this.form)
       val == true ? this.$store.dispatch('ACTION_ADD', this.form) : this.$store.dispatch('ACTION_UPDATA', this.form)
 
       this.dialogFormVisible = false
@@ -143,15 +143,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(['islog' , 'tableData' ]),
+    ...mapState(['islog','tableData' ]),
+    
   },
   created () {
     this.$store.dispatch("ACTION_DATA")
+    this.islogin = localStorage.getItem('token')
   },
-
-  //注册组件
-  // components: {
-  //   About
-  // }
 }
 </script>
