@@ -2,32 +2,23 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios"
 import qs from "qs"
-
+import login from './modules/login'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+
   state: {
-    islog:'',
     tableData:[],
   },
+
   mutations: {
     GET_DATA ( state , action ) {
       state.tableData = action
     },
-
-    GET_LOG ( state , action ) {
-      state.islog = action
-    }
   },
+
+  //异步
   actions: {
-    //登录
-    async  ACTION_LOG ( commit , val ) {
-      const res = await axios.post("http://49.235.147.95:3001/api/user/login", 
-        qs.stringify( { username:val.name,password:val.password})
-      )
-          localStorage.setItem("token" , res.data.data.token )
-          commit.commit('GET_LOG' , res.data.data.token )
-    },
     //获取初始数据
     async ACTION_DATA ({ commit }) {
       const res = await axios.get("http://49.235.147.95:3001/api/supplier/list")
@@ -57,5 +48,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    login
   }
 })

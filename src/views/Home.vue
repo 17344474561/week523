@@ -4,22 +4,34 @@
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <el-menu :default-openeds="['1', '3']">
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-message"></i>首页</template>
+            <template slot="title">
+              <i class="el-icon-message"></i>首页
+            </template>
           </el-submenu>
           <el-submenu index="2">
-            <template slot="title"><i class="el-icon-menu"></i>基础管理</template>
+            <template slot="title">
+              <i class="el-icon-menu"></i>基础管理
+            </template>
           </el-submenu>
           <el-submenu index="3">
-            <template slot="title"><i class="el-icon-price-tag"></i>销售</template>
+            <template slot="title">
+              <i class="el-icon-price-tag"></i>销售
+            </template>
           </el-submenu>
           <el-submenu index="4">
-            <template slot="title"><i class="el-icon-truck"></i>进货</template>
+            <template slot="title">
+              <i class="el-icon-truck"></i>进货
+            </template>
           </el-submenu>
           <el-submenu index="5">
-            <template slot="title"><i class="el-icon-s-cooperation"></i>库存</template>
+            <template slot="title">
+              <i class="el-icon-s-cooperation"></i>库存
+            </template>
           </el-submenu>
           <el-submenu index="6">
-            <template slot="title"><i class="el-icon-s-tools"></i>系统管理</template>
+            <template slot="title">
+              <i class="el-icon-s-tools"></i>系统管理
+            </template>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -34,9 +46,14 @@
               <el-dropdown-item>删除</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <span>{{islog == '' ? islogin :islog}}</span>
+          <span> 用户: {{ islog == '' ? islogin : islog }}</span>
         </el-header>
-        <el-button type="text" @click="add">添加供应商</el-button>
+        <el-button 
+          :style="{width:'100px',marginLeft:'20px'}"
+          type="primary"
+          @click="add">
+            添加供应商
+          </el-button>
         <el-dialog title="添加供应商" :visible.sync="dialogFormVisible">
           <el-form :model="form">
             <el-form-item label="供应商名称" :label-width="formLabelWidth">
@@ -69,20 +86,20 @@
         <el-main>
           <el-table :data="tableData" style="width: 100%">
             <el-table-column label="供应商" prop="supplierName"> </el-table-column>
-            <el-table-column label="联系人" prop="supplierContact"> </el-table-column>
+            <el-table-column label="联系人" prop="supplierContact"></el-table-column>
             <el-table-column label="联系电话" prop="phone"> </el-table-column>
             <el-table-column label="地址" prop="address"> </el-table-column>
             <el-table-column label="状态" prop="status"> </el-table-column>
-            <el-table-column label="描述" prop="description"> </el-table-column>
+            <el-table-column label="描述" prop="description"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
-                  @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                  @click="handleEdit(scope.$index, scope.row)">修改</el-button>
                 <el-button
                   size="mini"
                   type="danger"
-                  @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                  @click="handleDelete(scope.$index, scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -123,10 +140,10 @@ export default {
 
     confims  (val ) {
       console.log(val)
-      val == true ? this.$store.dispatch('ACTION_ADD', this.form) : this.$store.dispatch('ACTION_UPDATA', this.form)
+      val == true ? this.$store.dispatch('ACTION_ADD', this.form) 
+                  : this.$store.dispatch('ACTION_UPDATA', this.form)
 
       this.dialogFormVisible = false
-     
     },
     //修改
     handleEdit(index, row) {
@@ -143,7 +160,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['islog','tableData' ]),
+    ...mapState([ 'tableData' ]),
+    ...mapState('login',['islog'])
     
   },
   created () {
